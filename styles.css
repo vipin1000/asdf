@@ -737,3 +737,54 @@ img {
 .faq-item.active .faq-toggle i {
     transform: rotate(45deg);
 }
+
+/* Property Filter Section */
+.property-filter .filter-container {
+    max-width: 1000px; /* Increase max-width for a wider form */
+    margin: 0 auto;
+    background-color: var(--light-color);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: var(--box-shadow);
+}
+
+.filter-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Responsive grid layout */
+    gap: 25px; /* Increased gap */
+    align-items: end;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0; /* Add vertical padding */
+}
+
+.filter-group label {
+    margin-bottom: 10px; /* Increased spacing */
+    font-weight: 500;
+    font-size: 1.1rem; /* Slightly larger label */
+    color: var(--secondary-color);
+}
+
+.filter-group select {
+    padding: 12px 15px; /* Increased padding */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem; /* Larger font size */
+    background-color: #fff;
+    appearance: none; /* Remove default arrow */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%237E57C2'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd' /%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 20px;
+    cursor: pointer;
+}
+
+.filter-btn {
+    padding: 14px 30px; /* Larger button padding */
+    font-size: 1.1rem; /* Larger button text */
+    align-self: stretch; /* Make button stretch to grid item height if needed */
+    height: 50px; /* Match select height */
+}
