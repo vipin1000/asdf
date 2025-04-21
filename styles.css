@@ -160,7 +160,7 @@ img {
     justify-content: center;
     text-align: center;
     color: #fff;
-    padding-top: 80px;
+    padding-top: 100px;
 }
 
 .hero-content {
@@ -646,6 +646,16 @@ img {
     .hero h1 {
         font-size: 2.8rem;
     }
+    
+    .logo-img {
+        height: 40px;
+        width: auto !important;
+        max-width: 150px;
+    }
+    
+    .logo h1 {
+        font-size: 1.5rem;
+    }
 }
 
 @media screen and (max-width: 768px) {
@@ -685,6 +695,54 @@ img {
     
     .footer-links {
         flex-direction: column;
+    }
+    
+    .header {
+        position: fixed;
+        width: 100%;
+        z-index: 100;
+    }
+    
+    .navbar {
+        padding: 8px 0;
+    }
+    
+    .logo {
+        align-items: center;
+    }
+    
+    .logo-img {
+        height: 30px;
+        width: auto !important;
+        max-width: 120px;
+        margin-right: 10px;
+    }
+    
+    .logo-text {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .logo h1 {
+        font-size: 1rem;
+        margin: 0;
+        line-height: 1;
+    }
+    
+    .tagline {
+        font-size: 0.7rem;
+    }
+    
+    .page-banner {
+        padding-top: 80px;
+    }
+    
+    .page-banner h1 {
+        font-size: 1.8rem;
+    }
+    
+    .page-banner p {
+        font-size: 1rem;
     }
 }
 
@@ -787,4 +845,26 @@ img {
     font-size: 1.1rem; /* Larger button text */
     align-self: stretch; /* Make button stretch to grid item height if needed */
     height: 50px; /* Match select height */
+}
+
+/* Page Banner - Add padding-top to accommodate fixed header */
+.page-banner {
+    padding-top: 120px;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/api/placeholder/1920/400');
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+    color: #fff;
+    padding-bottom: 60px;
+}
+
+.page-banner h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.page-banner p {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
 }
