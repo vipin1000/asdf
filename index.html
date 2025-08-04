@@ -242,5 +242,172 @@
     </a>
 
     <script src="script.js"></script>
+    
+<!-- Place this inside <body> tag of your HTML page -->
+<!-- Chatbot Floating Icon -->
+<div class="chatbot-icon" id="chatbotIcon">💬</div>
+
+<!-- Chat Popup Modal -->
+<div class="chat-popup" id="chatPopup">
+    <div class="chat-header">Chatbot</div>
+    <div class="chat-body" id="chatBody">
+        <div class="bot-msg">Hello! How can I assist you today?</div>
+    </div>
+    <div class="chat-footer">
+        <input type="text" id="userInput" placeholder="Type your message...">
+        <button id="sendBtn">Send</button>
+    </div>
+</div>
+
+<!-- Chatbot JS -->
+<script>
+    const chatbotIcon = document.getElementById('chatbotIcon');
+    const chatPopup = document.getElementById('chatPopup');
+    const chatBody = document.getElementById('chatBody');
+    const userInput = document.getElementById('userInput');
+    const sendBtn = document.getElementById('sendBtn');
+
+    // Toggle Chat Popup
+    chatbotIcon.addEventListener('click', () => {
+        chatPopup.style.display = chatPopup.style.display === 'flex' ? 'none' : 'flex';
+    });
+
+    // Maintain Chat History
+    let chatHistory = [];
+
+    // Send Message to FastAPI RAG Backend
+    sendBtn.addEventListener('click', () => {
+        const message = userInput.value.trim();
+        if (message === '') return;
+
+        // Display user message
+        const userMsgDiv = document.createElement('div');
+        userMsgDiv.className = 'user-msg';
+        userMsgDiv.innerText = message;
+        chatBody.appendChild(userMsgDiv);
+        chatBody.scrollTop = chatBody.scrollHeight;
+
+        chatHistory.push({ user: message, ai: "" });
+        userInput.value = '';
+
+        // API Call to RAG Backend
+        fetch('http://localhost:7000/chat/query', {  // Update URL in prod
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query: message, history: chatHistory })
+        })
+        .then(response => response.json())
+        .then(data => {
+            const botReply = data.response || 'No response.';
+            chatHistory[chatHistory.length - 1].ai = botReply;
+
+            const botMsgDiv = document.createElement('div');
+            botMsgDiv.className = 'bot-msg';
+            botMsgDiv.innerText = botReply;
+            chatBody.appendChild(botMsgDiv);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        })
+        .catch(err => {
+            console.error(err);
+            const errorMsgDiv = document.createElement('div');
+            errorMsgDiv.className = 'bot-msg';
+            errorMsgDiv.innerText = 'Error connecting to bot.';
+            chatBody.appendChild(errorMsgDiv);
+        });
+    });
+
+    // Enter Key to Send
+    userInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            sendBtn.click();
+        }
+    });
+</script>
+
+<!-- Styling Example (Add this in your CSS file) -->
+<style>
+.chatbot-icon {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: #7E57C2;
+    color: white;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.chat-popup {
+    position: fixed;
+    bottom: 90px;
+    left: 20px;
+    width: 300px;
+    max-height: 400px;
+    display: none;
+    flex-direction: column;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.chat-header {
+    background: #7E57C2;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+.chat-body {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.chat-footer {
+    display: flex;
+    border-top: 1px solid #ccc;
+}
+
+.chat-footer input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+}
+
+.chat-footer button {
+    background: #7E57C2;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.user-msg {
+    text-align: right;
+    background: #e1f0ff;
+    margin: 5px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+.bot-msg {
+    text-align: left;
+    background: #f1f1f1;
+    margin: 5px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    display: inline-block;
+}
+</style>
+
 </body>
 </html>
